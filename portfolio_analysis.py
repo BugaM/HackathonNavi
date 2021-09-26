@@ -3,13 +3,17 @@ import pandas as pd
 
 portfolio = pd.read_csv('data/portfolio.csv')
 data = pd.read_csv('data/selected_prototype_data.csv')
+industry_dataset = pd.read_csv('data/prototype_industry_data.csv')
 risk = []
 esg = []
 industry = []
 stocks_worth = []
+industry_avr_esg = []
+industry_avr_risk = []
 portfolio_worth = 0
 for _, row in portfolio.iterrows():
     company = data[data.ticker == row.ticker]
+    company_industry = industry_dataset[industry_dataset.industry == company.industry.values[0]]
     if not company.empty:
         risk.append(company.risk.values[0])
         esg.append(company.score_value.values[0])
@@ -17,15 +21,23 @@ for _, row in portfolio.iterrows():
         stocks_worth.append(company.price.values[0]*row.quantity)
         portfolio_worth += company.price.values[0]*row.quantity
     else:
-        print("Não há informação suficiente sobre o ativo {}.".format(row.ticker))
+        print("Erro 404: active {} not found.".format(row.ticker))
         risk.append(np.NAN)
         esg.append(np.NAN)
         industry.append(np.NAN)
         stocks_worth.append(np.NAN)
+    if not company_industry.empty:
+        industry_avr_esg.append(company_industry.mean_esg.values[0])
+        industry_avr_risk.append(company_industry.mean_risk.values[0])
+    else:
+        industry_avr_esg.append(np.NAN)
+        industry_avr_risk.append(np.NAN)
 portfolio['risk'] = risk
 portfolio['esg'] = esg
 portfolio['industry'] = industry
 portfolio['stocks_worth'] = stocks_worth
+portfolio['industry_avr_esg'] = industry_avr_esg
+portfolio['industry_avr_risk'] = industry_avr_risk
 portfolio = portfolio.dropna()
 mean_esg = 0
 mean_risk = 0
