@@ -1,10 +1,8 @@
 import pandas as pd
 import numpy as np
 
-df_esg = pd.read_csv("esg_scores_history_rated.csv")
-df_risk = pd.read_csv("physical_risk_forecast_rated.csv")
-
-industry = 'FOA Food Products'  # defines industry
+df_esg = pd.read_csv("data/esg_scores_history_br.csv")
+df_risk = pd.read_csv("data/physical_risk_forecast_br.csv")
 
 # define which data will be analyzed
 
@@ -13,7 +11,6 @@ industry = 'FOA Food Products'  # defines industry
 # score_type = 'Environmental Dimension'
 score_type = 'S&P Global ESG Score' # regular ESG score
 
-# df_esg = df_esg[df_esg.industry == industry]
 dataset = df_esg[df_esg.aspect == score_type]
 dataset = dataset[dataset.assessment_year == 2020]
 dataset = dataset[['score_value', 'company_id', 'industry']]
