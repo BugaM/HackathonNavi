@@ -3,6 +3,7 @@ import numpy as np
 
 df_esg = pd.read_csv("data/esg_scores_history_br.csv")
 df_risk = pd.read_csv("data/physical_risk_forecast_br.csv")
+df_company = pd.read_csv("data/companies_br.csv")
 
 # define which data will be analyzed
 
@@ -18,6 +19,7 @@ df_risk = df_risk[df_risk.fiscal_year == 2019]
 df_risk = df_risk[df_risk.forecast_year == 2050]
 df_risk = df_risk[df_risk.scenario_level == 'High']
 risk = []
+ticker = []
 for _, row in dataset.iterrows():
     value = df_risk[df_risk.company_id == row.company_id]
     if not value.empty:
@@ -25,8 +27,15 @@ for _, row in dataset.iterrows():
     else:
         risk.append(np.NAN)
 
-dataset['risk'] = risk
+for _, row in dataset.iterrows():
+    value = df_company[df_company.company_id == row.company_id]
+    if not value.empty:
+        ticker.append(value.ticker.values[0])
+    else:
+        ticker.append(np.NAN)
 
+dataset['risk'] = risk
+dataset['ticker'] = ticker
 dataset = dataset.dropna()
 dataset = dataset.drop_duplicates(keep='first')
-dataset.to_csv('selected_prototype_data.csv', index=False)
+dataset.to_csv('data/selected_prototype_data.csv', index=False)
