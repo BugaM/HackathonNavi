@@ -41,5 +41,21 @@ for _, row in portfolio.iterrows():
     risk_impact.append(row.stocks_worth*(row.risk - mean_risk)/portfolio_worth)
 portfolio['esg_impact'] = esg_impact
 portfolio['risk_impact'] = risk_impact
+suggestions_df = pd.DataFrame(columns=['ticker', 'risk', 'score_value', 'industry'])
+for index, row in portfolio.iterrows():
+    current_risk = risk[index]
+    current_esg = esg[index]
+    options = data[data.industry == row.industry]
+    options = options[options.risk < current_risk]
+    options = options[['score_value', 'ticker', 'risk', 'industry']]
+    options.sort_values(by=['score_value'])
+    if not options.empty:
+        suggestions_df = suggestions_df.append(options.head(1), ignore_index=True)
+
+
 print("O valor total da carteira é {:.2f} BRL, sua média ESG é {:.2f} e seu risco médio é {:.2f}.".format(portfolio_worth, mean_esg, mean_risk))
+for _, row in suggestions_df.iterrows():
+    print('You should consider ' + row.ticker + ' as a option in the ' + row.industry + ' industry')
+suggestions_df.to_csv('data/portfolio_suggestions.csv')
+print('Suggested options have been exported')
 portfolio.to_csv('data/portfolio_analytics.csv', index=False)
