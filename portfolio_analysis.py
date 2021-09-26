@@ -55,7 +55,7 @@ for index, row in portfolio.iterrows():
 
 print("O valor total da carteira é {:.2f} BRL, sua média ESG é {:.2f} e seu risco médio é {:.2f}.".format(portfolio_worth, mean_esg, mean_risk))
 for _, row in suggestions_df.iterrows():
-    print('You should consider ' + row.ticker + ' as a option in the ' + row.industry + ' industry')
+    print('You should consider ' + row.ticker + ' as an option in the ' + row.industry + ' industry')
 suggestions_df.to_csv('data/portfolio_suggestions.csv')
 print('Suggested options have been exported')
 portfolio.to_csv('data/portfolio_analytics.csv', index=False)
