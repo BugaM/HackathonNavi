@@ -18,5 +18,5 @@ for industry in data["industry"].drop_duplicates(keep='first'):
     max_risk.append(np.max(data[data.industry == industry]["risk"]))
     min_risk.append(np.min(data[data.industry == industry]["risk"]))
 industries_dataset = pd.DataFrame({"industry": industries, "mean_esg": mean_esg, "max_esg": max_esg, "min_esg": min_esg,
-                                  "mean_risk": mean_esg, "max_risk": max_risk, "min_risk": min_risk})
+                                  "mean_risk": mean_risk, "max_risk": max_risk, "min_risk": min_risk})
 industries_dataset.to_csv('data/prototype_industry_data.csv', index=False)
