@@ -15,6 +15,9 @@ data_item = 'Company Revenue' #used for plot_esg_growth
 score_type = 'S&P Global ESG Score' # regular ESG score
 
 df_esg = df_esg[df_esg.industry == industry]
+# use only recent data
+if data_item != 'Company Revenue':
+    df_esg = df_esg[df_esg.assessment_year == 2020]
 df_env = df_env[df_env.data_item_name == data_item]
 dataset = df_esg[df_esg.aspect == score_type]
 dataset = dataset[['score_value', 'assessment_year', 'company_id']]
