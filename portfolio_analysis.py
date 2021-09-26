@@ -53,7 +53,7 @@ for index, row in portfolio.iterrows():
         suggestions_df = suggestions_df.append(options.head(1), ignore_index=True)
 
 
-print("O valor total da carteira é {:.2f} BRL, sua média ESG é {:.2f} e seu risco médio é {:.2f}.".format(portfolio_worth, mean_esg, mean_risk))
+print("Your portfolio is worth {:.2f} BRL. Its ESG mean score is {:.2f} and its climatic related risk (pessimist forecast for 2030) is  {:.2f}.".format(portfolio_worth, mean_esg, mean_risk))
 for _, row in suggestions_df.iterrows():
     print('You should consider ' + row.ticker + ' as an option in the ' + row.industry + ' industry')
 suggestions_df.to_csv('data/portfolio_suggestions.csv')
