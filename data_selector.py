@@ -1,18 +1,18 @@
 import pandas as pd
 import numpy as np
 
-df_esg = pd.read_csv("esg_scores_history_rated.csv")
-df_env = pd.read_csv("environmental_data_history_rated2012.csv")
+df_esg = pd.read_csv("data/esg_scores_history_rated.csv")
+df_env = pd.read_csv("data/environmental_data_history_rated2012.csv")
 
 industry = 'FOA Food Products'  # defines industry
 
 # define which data will be analyzed
 # data_item = 'Impact Ratio: Air Pollutants Direct & Indirect Cost'
-data_item = 'Company Revenue' #used for plot_esg_growth
+data_item = 'Company Revenue'  # used for plot_esg_growth
 
 # define which ESG score to use
 # score_type = 'Environmental Dimension'
-score_type = 'S&P Global ESG Score' # regular ESG score
+score_type = 'S&P Global ESG Score'  # regular ESG score
 
 df_esg = df_esg[df_esg.industry == industry]
 # use only recent data
