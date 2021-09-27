@@ -1,3 +1,6 @@
 *.png
 *.csv
 .idea/
+
+!*data/selected_prototype_data.csv
+!*data/prototype_industry_data.csv
